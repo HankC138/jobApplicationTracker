@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
-export function AppForm() {
+export function AppForm({setLoading}) {
 	const [jobApplicationInfo, setJobApplicationInfo] = useState({
 		company: "",
 		dateApplied: "",
@@ -24,15 +24,15 @@ export function AppForm() {
 		}));
 	};
 	const handleApplication = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-        axios.post('http://localhost:8080/api',jobApplicationInfo)
+		axios.post("http://localhost:8080/api", jobApplicationInfo);
+		event.preventDefault()
 		setJobApplicationInfo({
 			company: "",
 			dateApplied: "",
 			personContacted: "",
 			responseDate: "",
 		});
-		setSubmission(true)
+		setLoading(true)
 	};
 	return (
 		<form onSubmit={handleApplication}>

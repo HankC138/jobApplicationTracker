@@ -8,10 +8,10 @@ module.exports = app;
 
 app.use(express.static(path.join(__dirname, "..", "public")));
 app.use(cors({ origin: "*" }));
-app.use((req, res, next) => {
-	res.header("Access-Control-Allow-Origin", "*");
-	next();
-});
+// app.use((req, res, next) => {
+// 	res.header("Access-Control-Allow-Origin", "*");
+// 	next();
+// });
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.get("/api", async (_req, res) => {
@@ -35,10 +35,27 @@ app.post("/api", async (req, res) => {
 		console.error(error);
 	}
 });
+app.put(`/api/:applicationId`, async (req, res) => {
+	try {
+		await JobApplication.update(
+			{
+				rejected: true,
+			},
+			{
+				where: {
+					id: req.body.id,
+				},
+			}
+		);
+	} catch (error) {
+		console.error(error);
+	}
+});
 (async () => {
 	await db.authenticate().then(() => {
 		console.log("\x1b[36m ~Connected to Database~");
 	});
+	// await db.sync({force:true})
 	app.listen(8080, () =>
 		console.log(`\x1b[41m ${"listening on 8080"} \x1b[0m `)
 	);

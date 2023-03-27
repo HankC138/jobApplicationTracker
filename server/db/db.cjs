@@ -15,7 +15,12 @@ const JobApplication = db.define("application", {
 		type: Sequelize.STRING,
 	},
 	responseDate: {
-		type: Sequelize.DATEONLY,
+		type: Sequelize.STRING,
+		allowNull: true,
+	},
+	rejected: {
+		type: Sequelize.BOOLEAN,
+		defaultValue: false,
 	},
 });
 module.exports = { db, JobApplication };

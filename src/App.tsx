@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppForm } from "./AppForm";
 import { AppList } from "./AppList";
 function App() {
+	const [loading, setLoading] = useState(false)
+	useEffect(() => {
+	  setLoading(false)
+	}, [loading])
+	
 	return (
 		<div className="App">
-			<AppForm />
-			<AppList />
+			<AppForm setLoading={(status)=> setLoading(status)}/>
+			<AppList mainPageLoading={loading}/>
 		</div>
 	);
 }
